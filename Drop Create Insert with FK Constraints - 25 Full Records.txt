@@ -1,0 +1,675 @@
+-------------------------------------------------------
+-- DROP ALL TABLES (IN REVERSE ORDER THEY WERE CREATED)
+-------------------------------------------------------
+-- NOTE: PRIOR TO EXECUTING, ENSURE THAT THE TOGGLE OPTION 
+-- BUTTON TO CONTINUE IF SQL STATEMENTS FAIL IS ACTIVATED.
+-- HINT:  IT LOOKS LIKE TWO RED DOTS OVERLAYING A SQUARE.
+-------------------------------------------------------
+
+DROP TABLE business_property;
+DROP TABLE business;
+DROP TABLE inspections;
+DROP TABLE Emergency_Contact_Info;
+DROP TABLE property;
+
+----------------------------------------------------------------
+-- CREATE AND POPULATE TABLES - THOSE WITH NO FOREIGN KEYS FIRST
+----------------------------------------------------------------
+
+-- CREATE PROPERTY TABLE
+
+CREATE TABLE IF NOT EXISTS `lsfire`.`Property` 
+(
+  
+`idProperty` INT NOT NULL AUTO_INCREMENT,
+  
+`occupancyClass` VARCHAR(50) NOT NULL,
+  
+`hazardClass` VARCHAR(20) NOT NULL,
+  
+`district` VARCHAR(20) NOT NULL,
+  
+`numberPFA` INT NOT NULL,
+  
+`fireAlarmPanel` VARCHAR(20) NOT NULL,
+  
+`activeCheck` VARCHAR(2) NOT NULL,
+  
+`sysNormCheck` VARCHAR(2) NOT NULL,
+  
+`panelLocation` VARCHAR(50) NOT NULL,
+  
+`PropertyAddress` VARCHAR(255) NOT NULL,
+  
+PRIMARY KEY (`idProperty`)
+)
+
+ENGINE = InnoDB;
+
+
+
+
+
+-- POPULATE PROPERTY TABLE
+
+INSERT INTO `lsfire`.`property`
+
+(`occupancyClass`,
+`hazardClass`,
+`district`,
+`numberPFA`,
+`fireAlarmPanel`,
+`activeCheck`,
+`sysNormCheck`,
+`panelLocation`,
+`PropertyAddress`)
+
+values
+
+('occupied', 'danger', 'LSFD', 1, 'panel1', 'p', 'p', 'wall', '900 Wall St'), 
+
+
+('vacant', 'safe', 'LSFD', 2, 'panel2', 'p', 'p', 'floor', '910 Wall St'),
+
+
+('occupied', 'danger', 'LSFD', 3, 'panel3', 'f', 'f', 'wall', '432109 Space Dr'),
+
+
+('vacant', 'safe', 'LSFD', 300, 'panel300', 'f', 'f', 'floor', '432110 Space Dr'),
+
+
+('occupied', 'danger', 'LSFD', 4, 'panel4', 'f', 'f', 'wall', '432111 Space Dr'),
+
+
+('vacant', 'maybe', 'LSFD', 5, 'panel5', 'p', 'p', 'floor', '432112 Space Dr'),
+
+
+('occupied', 'danger', 'LSFD', 6, 'panel6', 'na', 'na', 'ground', '8675309 Boulevard'),
+
+('vacant', 'danger', 'LSFD', 7, 'panel7', 'na', 'na', 'ground', '916 Wall St'),
+
+
+('occupied', 'maybe', 'LSFD', 8, 'panel8', 'p', 'p', 'wall', '420 Boulevard'),
+
+
+('vacant', 'danger', 'LSFD', 9, 'panel9', 'p', 'p', 'wall', '9016 SW 10th St, Lees Summit MO 64064'),
+
+
+('occupied', 'safe', 'LSFD', 10, 'panel10', 'f', 'f', 'wall', '2505 NE Indian Pointe, Lees Summit MO 64086'),
+
+
+('vacant', 'danger', 'LSFD', 11, 'panel11', 'f', 'f', 'floor', '922 Wall St'),
+
+
+('occupied', 'maybe', 'LSFD', 12, 'panel12', 'p', 'p', 'floor', '432129 Space Dr'),
+
+
+('vacant', 'danger', 'LSFD', 13, 'panel13', 'p', 'p', 'wall', '1035 NE Hunters Ridge, Lees Summit MO 64086'),
+
+
+('occupied', 'danger', 'LSFD', 14, 'panel14', 'na', 'na', 'ground', '1738 Boulevard'),
+
+('vacant', 'maybe', 'LSFD', 15, 'panel15', 'p', 'p', 'wall', '432137 Space Dr'),
+
+('occupied', 'danger', 'LSFD', 1, 'panel1', 'p', 'p', 'wall', '1313 Mockingbird Lane'), 
+
+('vacant', 'safe', 'LSFD', 2, 'panel2', 'p', 'p', 'floor', '555 SW Wall St'),
+
+
+('occupied', 'danger', 'LSFD', 3, 'panel3', 'f', 'f', 'wall', '234 NE Spruce Lane'),
+
+
+('vacant', 'safe', 'LSFD', 300, 'panel300', 'f', 'f', 'floor', '123 SE Shuttle Dr'),
+
+('vacant', 'danger', 'LSFD', 9, 'panel9', 'p', 'p', 'wall', '9016 SW 30th St, Lees Summit MO 64064'),
+
+
+('occupied', 'safe', 'LSFD', 10, 'panel10', 'f', 'f', 'wall', '2504 NE Indian Creek, Lees Summit MO 64086'),
+
+
+('vacant', 'danger', 'LSFD', 11, 'panel11', 'f', 'f', 'floor', '922 Walnut St'),
+
+
+('occupied', 'maybe', 'LSFD', 12, 'panel12', 'p', 'p', 'floor', '129 NE Spaccy Dr'),
+
+
+('vacant', 'danger', 'LSFD', 13, 'panel13', 'p', 'p', 'wall', '100 NE Rightway Ridge, Lees Summit MO 64086'),
+
+
+('occupied', 'danger', 'LSFD', 14, 'panel14', 'na', 'na', 'ground', '1733 Maple Boulevard'),
+
+('vacant', 'maybe', 'LSFD', 15, 'panel15', 'p', 'p', 'wall', '222 NW Todd Lane'),
+
+('occupied', 'danger', 'LSFD', 1, 'panel1', 'p', 'p', 'wall', '3131 Mockingbird Lane'), 
+
+('vacant', 'safe', 'LSFD', 2, 'panel2', 'p', 'p', 'floor', '565 SW Walnut St'),
+
+
+('occupied', 'danger', 'LSFD', 3, 'panel3', 'f', 'f', 'wall', '234 NW Spud Lane'),
+
+
+('vacant', 'safe', 'LSFD', 300, 'panel300', 'f', 'f', 'floor', '123 SE Davenport Dr')
+;
+
+-- CREATE ECI TABLE
+
+CREATE TABLE IF NOT EXISTS `lsfire`.`Emergency_Contact_Info` 
+(
+  
+`idEmergency_Contact_Info` INT NOT NULL AUTO_INCREMENT,
+  
+`ECI_name` VARCHAR(50) NOT NULL,
+  
+`ECI_contact` VARCHAR(20) NOT NULL,
+  
+`ECI_Number` BIGINT(255) NOT NULL,
+  
+PRIMARY KEY (`idEmergency_Contact_Info`)
+)
+
+ENGINE = InnoDB;
+
+
+
+
+
+-- POPULATE ECI TABLE
+
+INSERT INTO `lsfire`.`emergency_contact_info`
+(
+`ECI_name`,
+`ECI_contact`,
+`ECI_Number`
+)
+
+VALUES
+
+('Michael Scott', 'Owner', 5555555555),
+
+('Jim Halpert', 'Manager', 6666666666),
+
+('Pam Beasley', 'Employee', 7777777777),
+('Michael Sport', 'Owner', 5551235555),
+
+('Joe Scott', 'Manager', 5553455555),
+
+('Mary Wells', 'Employee', 5555675555),
+
+('Juan Sanchez', 'Manager', 5555551111),
+
+('Julian Scotty', 'Owner', 5555552222),
+
+
+
+('Megan Knott', 'Manager', 2135554444),
+('Oscar Martinez', 'Employee', 1111111111),
+('Pam Beasley', 'Manager', 7777777777),
+('Dwight Shrute', 'Employee', 8888888888),
+('Phillis Vance', 'Owner', 9999999999),
+('Creed Bratton', 'Employee', 1010101010),
+('Mardith Palmer', 'Manager', 6262626262),
+('Dwight Shoop', 'Employee', 8944888888),
+('Phillip Vincent', 'Owner', 9992222999),
+('Fred Brattock', 'Employee', 1011111010),
+('Jose Brown', 'Manager', 1011114444),
+('Marrett Palmero', 'Manager', 6264346262),
+('Andy Bernard', 'Employee', 0000000000),
+('Stanley Hudson', 'Owner', 4444444444),
+('Start Here', 'Employee', 1010161010),
+('Abby Normay', 'Manager', 6252626262),
+('Ima Okay', 'Employee', 8947888888),
+('Test Me', 'Owner', 9998292999),
+('Darrel Sheets', 'Employee', 1011151010),
+('Bed Sheets', 'Manager', 101111443),
+('Flag Pole', 'Manager', 6266346262),
+('Hunny Bee', 'Employee', 0000050000),
+('Rusty Pipes', 'Owner', 4444445444)
+
+
+;
+
+
+
+
+
+-- CREATE INSPECTIONS TABLE 
+
+CREATE TABLE IF NOT EXISTS `lsfire`.`Inspections` 
+(
+  
+`idInspections` INT NOT NULL AUTO_INCREMENT,
+  
+`idProperty` INT NOT NULL,
+  
+`InspectionDate` DATE NOT NULL,
+  
+`ED_Obst` VARCHAR(2) NOT NULL,
+  
+`ED_Lock` VARCHAR(2) NOT NULL,
+  
+`ED_Illum` VARCHAR(2) NOT NULL,
+  
+`ES_Work` VARCHAR(2) NOT NULL,
+  
+`FD_Unapp` VARCHAR(2) NOT NULL,
+  
+`FD_Clear` VARCHAR(2) NOT NULL,
+  
+`FE_Min` VARCHAR(2) NOT NULL,
+  
+`FE_Max` VARCHAR(2) NOT NULL,
+  
+`FE_Annual` VARCHAR(2) NOT NULL,
+  
+`FE_Access` VARCHAR(2) NOT NULL,
+  
+`El_Ext` VARCHAR(2) NOT NULL,
+  
+`El_Multi` VARCHAR(2) NOT NULL,
+  
+`El_BoxSw` VARCHAR(2) NOT NULL,
+  
+`El_ElPa` VARCHAR(2) NOT NULL,
+  
+`El_36Clear` VARCHAR(2) NOT NULL,
+  
+`St_House` VARCHAR(2) NOT NULL,
+  
+`St_24BC` VARCHAR(2) NOT NULL,
+  
+`St_18BS` VARCHAR(2) NOT NULL,
+  
+`St_Stair` VARCHAR(2) NOT NULL,
+  
+`St_Ignit` VARCHAR(2) NOT NULL,
+  
+`FC_704` VARCHAR(2) NOT NULL,
+  
+`FC_MSDS` VARCHAR(2) NOT NULL,
+  
+`FC_Smoke` VARCHAR(2) NOT NULL,
+  
+`CG_Secured` VARCHAR(2) NOT NULL,
+  
+`SFO_Min` VARCHAR(2) NOT NULL,
+  
+`SFO_Appr` VARCHAR(2) NOT NULL,
+  
+`SFO_Auto` VARCHAR(2) NOT NULL,
+  
+`SFO_Weld` VARCHAR(2) NOT NULL,
+  
+`SS_Annual` VARCHAR(2) NOT NULL,
+  
+`SS_DoL` DATE NOT NULL,
+  
+`SS_Access` VARCHAR(2) NOT NULL,
+  
+`SS_Stand` VARCHAR(2) NOT NULL,
+  
+`SS_Sprink` VARCHAR(2) NOT NULL,
+  
+`SS_RiserL` VARCHAR(8) NOT NULL,
+  
+`HES_Service` VARCHAR(2) NOT NULL,
+  
+`HES_LSD` DATE NOT NULL,
+  
+`HES_Access` VARCHAR(2) NOT NULL,
+  
+`HES_Clean` VARCHAR(2) NOT NULL,
+  
+`HES_KClass` VARCHAR(2) NOT NULL,
+  
+`HES_Filter` VARCHAR(2) NOT NULL,
+  
+`FD_Maint` VARCHAR(2) NOT NULL,
+  
+`HES_Nozzle` VARCHAR(2) NOT NULL,
+  
+`OL_Posted` VARCHAR(2) NOT NULL,
+  
+`AD_Visible` VARCHAR(2) NOT NULL,
+  
+`FDA_Maint` VARCHAR(2) NOT NULL,
+  
+`FDA_Knox` VARCHAR(2) NOT NULL,
+  
+`FDA_KLoc` VARCHAR(8) NOT NULL,
+  
+`FDC_Caps` VARCHAR(2) NOT NULL,
+  
+`FDC_Ident` VARCHAR(2) NOT NULL,
+  
+`FDC_Access` VARCHAR(2) NOT NULL,
+  
+`FDC_Location` VARCHAR(8) NOT NULL,
+  
+`EL_Override` VARCHAR(2) NOT NULL,
+  
+`PR_704` VARCHAR(2) NOT NULL,
+  
+`PR_Permit` VARCHAR(2) NOT NULL,
+  
+`PR_Impact` VARCHAR(2) NOT NULL,
+  
+`OT_Violations` VARCHAR(255) NOT NULL,
+  
+`Inspectionscol` VARCHAR(45) NOT NULL,
+
+PRIMARY KEY (`idInspections`),
+  
+KEY `idProperty_idx` (`idProperty`),
+  
+CONSTRAINT `idProperty` FOREIGN KEY (`idProperty`) REFERENCES `property` (`idProperty`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+)ENGINE = InnoDB;
+
+
+-- POPULATE INSPECTIONS TABLE
+
+INSERT INTO `lsfire`.`inspections`
+
+(`idProperty`,
+`InspectionDate`,
+`ED_Obst`,
+`ED_Lock`,
+`ED_Illum`,
+`ES_Work`,
+`FD_Unapp`,
+`FD_Clear`,
+`FE_Min`,
+`FE_Max`,
+`FE_Annual`,
+`FE_Access`,
+`El_Ext`,
+`El_Multi`,
+`El_BoxSw`,
+`El_ElPa`,
+`El_36Clear`,
+`St_House`,
+`St_24BC`,
+`St_18BS`,
+`St_Stair`,
+`St_Ignit`,
+`FC_704`,
+`FC_MSDS`,
+`FC_Smoke`,
+`CG_Secured`,
+`SFO_Min`,
+`SFO_Appr`,
+`SFO_Auto`,
+`SFO_Weld`,
+`SS_Annual`,
+`SS_DoL`,
+`SS_Access`,
+`SS_Stand`,
+`SS_Sprink`,
+`SS_RiserL`,
+`HES_Service`,
+`HES_LSD`,
+`HES_Access`,
+`HES_Clean`,
+`HES_KClass`,
+`HES_Filter`,
+`FD_Maint`,
+`HES_Nozzle`,
+`OL_Posted`,
+`AD_Visible`,
+`FDA_Maint`,
+`FDA_Knox`,
+`FDA_KLoc`,
+`FDC_Caps`,
+`FDC_Ident`,
+`FDC_Access`,
+`FDC_Location`,
+`EL_Override`,
+`PR_704`,
+`PR_Permit`,
+`PR_Impact`,
+`OT_Violations`,
+`Inspectionscol`)
+
+VALUES
+
+(1,
+'2011-04-25', 'P','F','F','P','NA','NA','NA','P','P','F','F','P','NA','NA','P','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','F','P','2011-04-23','P','F','P','F','F','2011-03-03', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'F', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'F', 'P', 'F'),
+
+(2,'2011-03-25', 'P','P','F','P','NA','NA','NA','P','P','F','F','P','NA','NA','P','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2011-03-01','P','F','P','F','F','2011-03-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'F', 'P', 'F'),
+(3,'2017-03-19', 'P','P','F','P','NA','NA','NA','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2017-03-10','P','NA','P','F','F','2017-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'P', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(4,'2003-03-19', 'P','P','F','P','NA','NA','NA','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2003-03-10','P','NA','P','F','F','2003-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'P', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(5,'2009-03-19', 'P','P','F','P','P','P','P','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2009-03-10','P','NA','P','F','F','2009-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(6,'2017-03-01', 'P','P','F','P','P','P','P','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2017-02-22','P','NA','P','F','F','2017-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P'),
+(7,'1998-09-01', 'P','P','F','P','P','P','P','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','1998-09-01','P','NA','P','F','F','1998-08-30', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P'),
+(8,'1901-09-01', 'P','P','F','P','P','P','P','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','1901-09-01','P','NA','P','F','F','1901-08-30', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P'),
+(9,'2014-09-01', 'P','P','P','P','P','P','P','P','P','P','P','P','P','NA','P','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2014-09-01','P','NA','P','F','F','2014-08-30','P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P'),
+(10,'2015-09-01', 'P','P','P','P','P','P','P','P','P','P','P','P','P','NA','P','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2015-09-01','P','NA','P','F','F','2015-08-30', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P'),
+(11,'2011-04-25', 'P','F','F','P','NA','NA','NA','P','P','F','F','P','NA','NA','P','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','F','P','2011-04-23','P','F','P','F','F','2011-03-03', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'F', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'F', 'P', 'F'),
+
+(12,'2011-03-25', 'P','P','F','P','NA','NA','NA','P','P','F','F','P','NA','NA','P','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2011-03-01','P','F','P','F','F','2011-03-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'F', 'P', 'F'),
+(13,'2017-03-19', 'P','P','F','P','NA','F','NA','P','P','F','F','P','P','NA','F','NA','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','NA','2017-03-10','P','NA','P','F','F','2017-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'P', 'F', 'F', 'P', 'NA', 'F', 'P', 'F'),
+(14,'2017-03-16', 'P','P','F','P','NA','NA','NA','P','P','F','F','P','P','NA','P','F','F','F','P','P','P', 'NA','P','P','NA','P','F','P','P','2017-03-10','P','NA','P','F','F','2017-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'P', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(15,'2017-03-20', 'P','P','F','P','NA','F','NA','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2017-03-10','P','NA','P','F','F','2017-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'P', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(16,'2017-03-21', 'P','P','F','P','NA','NA','NA','P','P','F','F','P','P','NA','F','F','P','F','P','P','NA', 'NA','P','P','NA','P','F','F','P','2017-03-10','P','NA','F','F','F','2017-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'P', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(17,'2017-03-22', 'P','P','F','P','F','NA','NA','P','P','F','F','P','P','NA','F','F','F','F','P','P','P', 'NA','P','P','NA','P','F','P','P','2017-03-10','P','NA','P','F','F','2017-02-02', 'P','F','NA','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'P', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(18,'2017-03-23', 'P','P','F','P','NA','NA','NA','P','P','F','F','P','P','NA','F','NA','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2017-03-10','P','NA','P','F','F','2017-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'P', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(19,'2003-03-19', 'P','P','F','P','NA','NA','NA','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2003-03-10','P','NA','P','F','F','2003-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'P', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(20,'2009-03-19', 'P','P','F','P','P','P','P','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2009-03-10','P','NA','P','F','F','2009-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'F', 'F', 'P', 'F'),
+(21,'2017-03-01', 'P','P','F','P','P','P','P','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2017-02-22','P','NA','P','F','F','2017-02-02', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P'),
+(22,'2015-08-01', 'P','P','F','P','P','P','P','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','1998-09-01','P','NA','P','F','F','1998-08-30', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P'),
+(23,'2015-10-01', 'P','P','F','P','P','P','P','P','P','F','F','P','P','NA','F','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','1901-09-01','P','NA','P','F','F','1901-08-30', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P'),
+(24,'2015-09-01', 'P','P','P','P','P','P','P','P','P','P','P','P','P','NA','P','F','F','NA','P','P','NA', 'NA','P','P','NA','P','F','P','P','2014-09-01','P','NA','P','F','F','2014-08-30', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P'),
+(25,'2015-09-01', 'P','P','P','P','P','P','P','P','P','P','P','P','P','NA','P','F','F','F','P','P','NA', 'NA','P','P','NA','P','F','P','P','2015-09-01','P','NA','P','F','F','2015-08-30', 'P','F','P','P','NA','NA', 
+'F', 'F', 'F', 'NA', 'P', 'NA', 'P', 'F', 'F', 'F', 'P', 'P', 'P', 'P', 'P');
+
+
+-- CREATE BUSINESS TABLE
+
+CREATE TABLE IF NOT EXISTS `lsfire`.`Business` 
+(
+  
+`idBusiness` INT NOT NULL AUTO_INCREMENT,
+  
+`name` VARCHAR(255) NOT NULL,
+  
+`phone` INT NOT NULL,
+
+  
+`idECI` INT NOT NULL,
+  
+PRIMARY KEY (`idBusiness`),
+KEY `idECI_idx` (`idECI`),
+  
+CONSTRAINT `idECI` FOREIGN KEY (`idECI`) REFERENCES `emergency_contact_info` (`idEmergency_Contact_Info`) ON DELETE NO ACTION ON UPDATE NO ACTION
+
+
+)
+
+ENGINE = InnoDB;
+
+-- POPULATE BUSINESS TABLE
+
+INSERT INTO `lsfire`.`business`
+(`name`,
+`phone`,
+`idECI`
+)
+
+VALUES
+
+
+('Dog Food Company', 1111134110, 1),
+
+('Michael Scott Paper Company', 1111441107, 2),
+
+('Sabre Printer Company', 1212441212, 3),
+('SubWay #1', 1111166110, 4),
+
+('Subway #2', 1144111107, 5),
+
+('Subway #3', 1212121552, 6),
+('McDonalds #1', 1111116610, 7),
+
+('McDonalds #2', 1441111107, 8),
+
+('Phillips 66', 1219921212, 9),
+('HyVee West', 1111133110, 10),
+
+('HyVee East', 1341111107, 11),
+
+('Price Chopper', 1213521212, 12),
+('Bob Sight Ford', 1111134110, 13),
+
+('QT #3432', 1011111107, 2),
+
+('QT # 5543', 1212441212, 3),
+('Golds Gym', 1111166110, 14),
+
+('Kohls', 1144111107, 15),
+
+('Target', 1212121552, 16),
+('Bodees BBQ', 1111116610, 17),
+
+('Jack Stack', 1441111107, 18),
+
+('Petco', 1219921212, 19),
+('Dew Drop Inn', 1111133110, 20),
+
+('Holiday Inn Express', 1341111107, 11),
+
+('Culvers', 1213521212, 12),
+('St Lukes East', 1111111110, 13),
+
+('Applebees #1', 1111111107, 14),
+
+('Applebees #2', 1212121212, 15),
+('R&DLeverage', 1111111110,16),
+
+('The Custom Framers', 1111111107, 17),
+
+('State Frame Insurace', 1212121212, 18),
+('Holiday Motors', 1341111107, 19),
+
+('Lowes', 1213522212, 20),
+('Home Depot', 1111122110, 21),
+
+('Perkins', 1111113307, 23),
+
+('Summit Grille', 1212124412, 22),
+('Rodneys Chili Shack', 1111115110,24),
+
+('The Custom Car Shoppe', 1151111107, 25),
+
+('State Pharm Insurace', 1216121212, 26)
+;
+
+-- CREATE BUSINESS_PROPERTY TABLE
+
+CREATE TABLE `business_property` 
+(`idBusiness_Property` int(11) NOT NULL AUTO_INCREMENT,
+  
+ `idBusiness` int(11) NOT NULL,
+  
+ `idProperty` int(11) NOT NULL,
+  
+PRIMARY KEY (`idBusiness_Property`),
+  
+KEY `idBP_Prop_idx` (`idProperty`),
+  
+KEY `idBP_Bus_idx` (`idBusiness`),
+  
+CONSTRAINT `idBP_Bus` 
+FOREIGN KEY (`idBusiness`) REFERENCES `business` (`idBusiness`),
+  
+CONSTRAINT `idBP_Prop` 
+FOREIGN KEY (`idProperty`) REFERENCES `property` (`idProperty`) 
+);
+
+-- POPULATE BUSINESS_PROPERTY TABLE
+
+INSERT INTO `lsfire`.`business_property`
+(`idProperty`,
+`idBusiness`)
+
+VALUES
+
+(16, 1),
+
+(11, 2),
+
+(5, 3),
+(1, 4),
+
+(2, 5),
+
+(3, 6),
+(4, 7),
+
+(6, 8),
+
+(7, 9),
+(8, 10),
+
+(9, 11),
+
+(10, 12),
+(12, 13),
+
+(13, 14),
+
+(14, 15),
+(15, 16),
+
+(17, 17),
+
+(18, 18),
+(19, 19),
+
+(20, 20),
+
+(21, 15),
+(22, 20),
+
+(23, 19),
+
+(24, 12),
+(25, 21),
+(26, 22),
+
+(27, 23),
+
+(28, 24),
+(29, 25),
+
+(30, 26)
+;
+
+select * from property p
+join business_property bp on bp.idProperty = p.idProperty
+join business b on b.idBusiness = bp.idBusiness
+join emergency_contact_info e on e.idEmergency_Contact_Info = b.idECI
+join inspections i on i.idProperty = p.idProperty
